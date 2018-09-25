@@ -3,6 +3,8 @@ package com.example.o.gis2;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.net.Uri;
 import android.provider.Settings;
@@ -20,6 +22,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import android.support.design.widget.Snackbar;
 
+import java.io.IOException;
+import java.util.List;
 import java.util.Locale;
 
 
@@ -37,6 +41,10 @@ public class MainActivity extends AppCompatActivity {
     private String mLongitudeLabel;
     private TextView mLatitudeText;
     private TextView mLongitudeText;
+    private TextView mAddressText;
+
+    private String[] AddressArray;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         mLongitudeLabel = getResources().getString(R.string.longitude_label);
         mLatitudeText = (TextView) findViewById((R.id.latitude_text));
         mLongitudeText = (TextView) findViewById((R.id.longitude_text));
+        mAddressText = findViewById(R.id.address_text);
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
@@ -59,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
             requestPermissions();
         } else {
             getLastLocation();
+
         }
     }
     @SuppressWarnings("MissingPermission")
@@ -75,7 +85,8 @@ public class MainActivity extends AppCompatActivity {
                     mLongitudeText.setText(String.format(Locale.ENGLISH, "%s: %f",
                             mLongitudeLabel,
                             mLastLocation.getLongitude()));
-
+                    //주소 추가한 부분
+                    toAddress();
 
                 } else {
                     Log.w(TAG,"getLastLocation:exception", task.getException());
@@ -84,6 +95,23 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+    //주소 넣어주는 함수
+    public void toAddress() {
+        try {
+            Geocoder geocoder = new Geocoder(this, Locale.KOREA);
+            List<Address> addresses = geocoder.getFromLocation(mLastLocation.getLatitude(),mLastLocation.getLongitude(),1);
+            if (addresses.size() >0) {
+                Address address = addresses.get(0);
+                //mAddressText.setText(String.format(address.getAddressLine(0).toString()));
+                AddressArray = String.format(address.getAddressLine(0).toString()).split(" ");
+                mAddressText.setText(String.format("\n[%s]\n[%s]\n[%s]",AddressArray[0],AddressArray[1],AddressArray[2]));
+                        //AddressArray[0],AddressArray[1],AddressArray[2])); 0은 대한민국, 1은 광역자치단체, 2는 시군구단위
+               // ));
+            }
+        } catch (IOException e) {
+            Log.e(TAG, "Failed in using Geocoder",e);
+        }
     }
     private void showSnackbar(final String text) {
         View container = findViewById(R.id.main_activity_container);
