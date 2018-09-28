@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "600519420809",
+    "firebase_url": "https://gis2-ca8ca.firebaseio.com",
+    "project_id": "gis2-ca8ca",
+    "storage_bucket": "gis2-ca8ca.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:600519420809:android:9f1810e191953621",
+        "android_client_info": {
+          "package_name": "com.example.o.gis2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "600519420809-pbi780l5eekv5rqgprjt27jgoogp08m3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.o.gis2",
+            "certificate_hash": "b020f98700e385db32f0ab2b1d272d2b569d467f"
+          }
+        },
+        {
+          "client_id": "600519420809-vl3k9t3eqnjk0umdasfdtv9l2dmur6p8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDi8ZC3jsHxtYXqn6U_wyyMnNw80_GSf7w"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "600519420809-vl3k9t3eqnjk0umdasfdtv9l2dmur6p8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
