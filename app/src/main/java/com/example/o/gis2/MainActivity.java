@@ -103,9 +103,10 @@ public class MainActivity extends AppCompatActivity {
             List<Address> addresses = geocoder.getFromLocation(mLastLocation.getLatitude(),mLastLocation.getLongitude(),1);
             if (addresses.size() >0) {
                 Address address = addresses.get(0);
-                //mAddressText.setText(String.format(address.getAddressLine(0).toString()));
-                AddressArray = String.format(address.getAddressLine(0).toString()).split(" ");
-                mAddressText.setText(String.format("\n[%s]\n[%s]\n[%s]",AddressArray[0],AddressArray[1],AddressArray[2]));
+                mAddressText.setText(String.format(address.getAddressLine(0).toString()));
+                //AddressArray = String.format(address.getAddressLine(0).toString()).split(" ");
+
+                //mAddressText.setText(String.format("\n[%s]\n[%s]\n[%s]",AddressArray[0],AddressArray[1],AddressArray[2]));
                         //AddressArray[0],AddressArray[1],AddressArray[2])); 0은 대한민국, 1은 광역자치단체, 2는 시군구단위
                // ));
             }
