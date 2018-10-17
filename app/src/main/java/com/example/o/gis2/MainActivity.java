@@ -86,8 +86,10 @@ public class MainActivity extends AppCompatActivity {
                             mLongitudeLabel,
                             mLastLocation.getLongitude()));
                     //주소 추가한 부분
-                    toAddress();
-
+                    LocationRelated LocationRelated = new LocationRelated();
+                    Address address =  LocationRelated.toAddress(this, mLastLocation.getLatitude(), mLastLocation.getLongitude(), TAG);
+                    //주소 출력하는 부분
+                    mAddressText.setText(String.format("\n[%s]\n[%s]\n[%s]",address.getLocality(),address.getSubLocality(), address.getThoroughfare()));
                 } else {
                     Log.w(TAG,"getLastLocation:exception", task.getException());
                     showSnackbar(getString(R.string.no_location_detected));
@@ -97,6 +99,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     //주소 넣어주는 함수
+
+    /*
     public void toAddress() {
         try {
             Geocoder geocoder = new Geocoder(this, Locale.KOREA);
@@ -114,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
             Log.e(TAG, "Failed in using Geocoder",e);
         }
     }
+    */
     private void showSnackbar(final String text) {
         View container = findViewById(R.id.main_activity_container);
         if(container != null){
