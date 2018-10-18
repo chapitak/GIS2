@@ -31,7 +31,7 @@ public class LocationRelated {
         } catch (IOException e) {
             Log.e(TAG, "Failed in using Geocoder",e);
         }
-
+        return null;
     }
 
 

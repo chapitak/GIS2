@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
                             mLastLocation.getLongitude()));
                     //주소 추가한 부분
                     LocationRelated LocationRelated = new LocationRelated();
-                    Address address =  LocationRelated.toAddress(this, mLastLocation.getLatitude(), mLastLocation.getLongitude(), TAG);
+                    Address address =  LocationRelated.toAddress(getApplicationContext(), mLastLocation.getLatitude(), mLastLocation.getLongitude(), TAG);
                     //주소 출력하는 부분
                     mAddressText.setText(String.format("\n[%s]\n[%s]\n[%s]",address.getLocality(),address.getSubLocality(), address.getThoroughfare()));
                 } else {
