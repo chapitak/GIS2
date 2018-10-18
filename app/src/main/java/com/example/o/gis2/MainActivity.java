@@ -89,7 +89,14 @@ public class MainActivity extends AppCompatActivity {
                     LocationRelated LocationRelated = new LocationRelated();
                     Address address =  LocationRelated.toAddress(getApplicationContext(), mLastLocation.getLatitude(), mLastLocation.getLongitude(), TAG);
                     //주소 출력하는 부분
-                    mAddressText.setText(String.format("\n[%s]\n[%s]\n[%s]",address.getLocality(),address.getSubLocality(), address.getThoroughfare()));
+                    String Locality = address.getLocality();
+                    String SubLocality = address.getSubLocality();
+                    String Thoroughfare = address.getThoroughfare();
+
+                    mAddressText.setText(String.format("\n[%s]\n[%s]\n[%s]",Locality,SubLocality, Thoroughfare));
+                    FirebaseCon FirebaseCon = new FirebaseCon();
+                    FirebaseCon.InsertGI(Locality,SubLocality, Thoroughfare);
+
                 } else {
                     Log.w(TAG,"getLastLocation:exception", task.getException());
                     showSnackbar(getString(R.string.no_location_detected));
