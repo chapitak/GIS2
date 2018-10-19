@@ -20,6 +20,12 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import android.support.design.widget.Snackbar;
 
 import java.io.IOException;
@@ -45,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
 
     private String[] AddressArray;
 
+    private DatabaseReference mUserRef;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         mAddressText = findViewById(R.id.address_text);
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-
+        mUserRef = FirebaseDatabase.getInstance().getReference().child("user");
     }
 
     @Override
@@ -70,6 +78,34 @@ public class MainActivity extends AppCompatActivity {
             getLastLocation();
 
         }
+
+        ValueEventListener firstVisitListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Object string = dataSnapshot.getValue();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        };
+        mUserRef.addValueEventListener(firstVisitListener);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
     @SuppressWarnings("MissingPermission")
     public void getLastLocation() {
@@ -105,6 +141,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+
+
     //주소 넣어주는 함수
 
     /*

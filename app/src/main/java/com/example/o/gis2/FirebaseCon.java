@@ -8,12 +8,12 @@ import com.google.firebase.database.ServerValue;
 
 public class FirebaseCon {
 
+    DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
 
     public void InsertGI(String Locality, String SubLocality, String Thoroughfare)
-
     {
 
-        DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
+
         DatabaseReference locationRef = mRootRef.child("Location");
         String key = locationRef.push().getKey();
         DatabaseReference uid = locationRef.child(key).child("UID");
@@ -29,6 +29,16 @@ public class FirebaseCon {
         regTime.setValue(ServerValue.TIMESTAMP);
         //regTime.setValue()
         //일단 이렇게만
+
+
+        //user부분 삽입
+        DatabaseReference userRef = mRootRef.child("User");
+        DatabaseReference userUid = userRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+        userUid.setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        userUid.child(Locality).setValue("Y");
+        userUid.child(SubLocality).setValue("Y");
+
 
     }
 
