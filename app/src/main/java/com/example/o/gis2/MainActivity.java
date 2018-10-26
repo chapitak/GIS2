@@ -20,6 +20,7 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -65,7 +66,10 @@ public class MainActivity extends AppCompatActivity {
         mAddressText = findViewById(R.id.address_text);
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        mUserRef = FirebaseDatabase.getInstance().getReference().child("user");
+        DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference userRef = mRootRef.child("User");
+        mUserRef = FirebaseDatabase.getInstance().getReference().child("User").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
     }
 
     @Override
@@ -78,33 +82,6 @@ public class MainActivity extends AppCompatActivity {
             getLastLocation();
 
         }
-
-        ValueEventListener firstVisitListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Object string = dataSnapshot.getValue();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        };
-        mUserRef.addValueEventListener(firstVisitListener);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     }
     @SuppressWarnings("MissingPermission")
@@ -132,6 +109,8 @@ public class MainActivity extends AppCompatActivity {
                     mAddressText.setText(String.format("\n[%s]\n[%s]\n[%s]",Locality,SubLocality, Thoroughfare));
                     FirebaseCon FirebaseCon = new FirebaseCon();
                     FirebaseCon.InsertGI(Locality,SubLocality, Thoroughfare);
+                    FirebaseCon.CheckUserNewLocation(Locality);
+                    FirebaseCon.CheckUserNewLocation(SubLocality);
 
                 } else {
                     Log.w(TAG,"getLastLocation:exception", task.getException());

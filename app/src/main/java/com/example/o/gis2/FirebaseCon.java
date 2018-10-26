@@ -1,10 +1,18 @@
 package com.example.o.gis2;
 
 
+import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
+import com.google.firebase.database.ValueEventListener;
 
 public class FirebaseCon {
 
@@ -29,15 +37,54 @@ public class FirebaseCon {
         regTime.setValue(ServerValue.TIMESTAMP);
         //regTime.setValue()
         //일단 이렇게만
-
+        /*
 
         //user부분 삽입
         DatabaseReference userRef = mRootRef.child("User");
         DatabaseReference userUid = userRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
+        //
+
         userUid.setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
         userUid.child(Locality).setValue("Y");
         userUid.child(SubLocality).setValue("Y");
+        */
+
+    }
+    public void CheckUserNewLocation(String Location)
+    {
+
+
+        DatabaseReference userRef = mRootRef.child("User");
+        DatabaseReference selectedUserRef = userRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        //selectedUserRef.setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        DatabaseReference newLocation = selectedUserRef.child(Location);
+        newLocation.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                 Locations whetherVisited = dataSnapshot.getValue(Locations.class);
+
+                if(whetherVisited != null)
+                {
+                    System.out.println("이미있음");
+                }
+                else{
+                   newLocation.setValue("Y");
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+
+
+
 
 
     }
