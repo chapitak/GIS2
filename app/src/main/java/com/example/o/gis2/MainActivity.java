@@ -239,4 +239,22 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+    public void mNLocaPop(View v){
+        //데이터 담아서 팝업(액티비티) 호출
+        Intent intent = new Intent(this, NLocaPopActivity.class);
+        //intent.putExtra("data", "Test Popup");
+        startActivityForResult(intent, 1);
+    }
+
+    /*@Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode==1){
+            if(resultCode==RESULT_OK){
+                //데이터 받기
+                String result = data.getStringExtra("result");
+
+            }
+        }
+    }*/
+
 }
