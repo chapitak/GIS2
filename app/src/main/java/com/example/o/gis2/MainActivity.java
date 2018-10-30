@@ -1,6 +1,7 @@
 package com.example.o.gis2;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
     private String[] AddressArray;
 
     private DatabaseReference mUserRef;
+    public static Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +71,9 @@ public class MainActivity extends AppCompatActivity {
         DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
         DatabaseReference userRef = mRootRef.child("User");
         mUserRef = FirebaseDatabase.getInstance().getReference().child("User").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+        mContext = this;
+
 
     }
 
@@ -111,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
                     FirebaseCon.InsertGI(Locality,SubLocality, Thoroughfare);
                     FirebaseCon.CheckUserNewLocation(Locality);
                     FirebaseCon.CheckUserNewLocation(SubLocality);
+
 
                 } else {
                     Log.w(TAG,"getLastLocation:exception", task.getException());

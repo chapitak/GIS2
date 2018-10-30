@@ -22,6 +22,8 @@ public class FirebaseCon {
     DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
 
 
+
+
     public void InsertGI(String Locality, String SubLocality, String Thoroughfare)
     {
 
@@ -67,14 +69,14 @@ public class FirebaseCon {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                  String whetherVisited = dataSnapshot.getValue(String.class);
+                //String baaaaaaa = "Y";
+                if(whetherVisited !=null){
 
-                if(whetherVisited == "Y")
-                {
-                    System.out.println("이미있음");
-                }
-                else{
+                   // System.out.println("이미있음");
+                }else{
                    newLocation.setValue("Y");
-
+                    View view = ((MainActivity)MainActivity.mContext).getWindow().getDecorView();
+                    ((MainActivity)MainActivity.mContext).mNLocaPop(view);
 
 
                 }
